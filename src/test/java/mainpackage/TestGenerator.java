@@ -42,10 +42,20 @@ public class TestGenerator {
      * Check does required files exist and if not - creates them.
      */
     public static void generateResources() {
+        if (!doesExist(DIR_CASE_INSENSETIVE) || !doesExist(DIR_CASE_SENSETIVE)) {
+            try {
+                Files.createDirectory(Paths.get(DIR_CASE_INSENSETIVE));
+                Files.createDirectory(Paths.get(DIR_CASE_SENSETIVE));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
         String sourceTest1 = DIR + "generatedSource1.txt";
         String controlSource1 = DIR_CASE_INSENSETIVE + "generatedFileResults1.txt";
         String controlSourceIns1 = DIR_CASE_SENSETIVE + "generatedFileResults1.txt";
-        if (!doesFileExist(sourceTest1) || !doesFileExist(controlSource1) || !doesFileExist(controlSourceIns1)) {
+        if (!doesExist(sourceTest1) || !doesExist(controlSource1) || !doesExist(controlSourceIns1)) {
             prepareTestEnvironment(SOURCE_FILE_DIR, sourceTest1, 500);
             dummyCreateResultFile(sourceTest1, controlSource1, false);
             dummyCreateResultFile(sourceTest1, controlSourceIns1, true);
@@ -54,7 +64,7 @@ public class TestGenerator {
         String sourceTest2 = DIR + "generatedSource2.txt";
         String controlSource2 = DIR_CASE_INSENSETIVE + "generatedFileResults2.txt";
         String controlSourceIns2 = DIR_CASE_SENSETIVE + "generatedFileResults2.txt";
-        if (!doesFileExist(sourceTest2) || !doesFileExist(controlSource2) || !doesFileExist(controlSourceIns2)) {
+        if (!doesExist(sourceTest2) || !doesExist(controlSource2) || !doesExist(controlSourceIns2)) {
             prepareTestEnvironment(SOURCE_FILE_DIR, sourceTest2, 1000);
             dummyCreateResultFile(sourceTest2, controlSource2, false);
             dummyCreateResultFile(sourceTest2, controlSourceIns2, true);
@@ -63,7 +73,7 @@ public class TestGenerator {
         String sourceTest3 = DIR + "generatedSource3.txt";
         String controlSource3 = DIR_CASE_INSENSETIVE + "generatedFileResults3.txt";
         String controlSourceIns3 = DIR_CASE_SENSETIVE + "generatedFileResults3.txt";
-        if (!doesFileExist(sourceTest3) || !doesFileExist(controlSource3)) {
+        if (!doesExist(sourceTest3) || !doesExist(controlSource3)) {
             prepareTestEnvironment(SOURCE_FILE_DIR, sourceTest3, 3000);
             dummyCreateResultFile(sourceTest3, controlSource3, false);
             dummyCreateResultFile(sourceTest3, controlSourceIns3, true);
@@ -72,7 +82,7 @@ public class TestGenerator {
         String sourceTest4 = DIR + "HugeFile.txt";
         String controlSource4 = DIR_CASE_INSENSETIVE + "HugeFileResults.txt";
         String controlSourceIns4 = DIR_CASE_SENSETIVE + "HugeFileResults.txt";
-        if (!doesFileExist(sourceTest4) || !doesFileExist(controlSource4)) {
+        if (!doesExist(sourceTest4) || !doesExist(controlSource4)) {
             prepareTestEnvironment(SOURCE_FILE_DIR, sourceTest4, 60000);
             dummyCreateResultFile(sourceTest4, controlSource4, false);
             dummyCreateResultFile(sourceTest4, controlSourceIns4, true);
@@ -152,7 +162,7 @@ public class TestGenerator {
         }
     }
 
-    private static boolean doesFileExist(String fileName) {
+    private static boolean doesExist(String fileName) {
         return Files.exists(Paths.get(fileName));
     }
 }
